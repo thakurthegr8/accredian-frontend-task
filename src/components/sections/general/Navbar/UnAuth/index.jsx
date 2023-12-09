@@ -16,7 +16,7 @@ const UnAuthNavbar = () => {
                         <Stack sx={{ flexGrow: 1, justifyContent: "end", gap: 1 }} direction="horizontal">
                             {!auth?.user && <>
                                 <Button variant='link' LinkComponent={Link} to="/login">login</Button>
-                                <Button variant='contained' LinkComponent={Link} to="/register">register</Button>
+                                <Button variant='contained' LinkComponent={Link} to="/signup">register</Button>
                             </>}
                         </Stack>
                     </Toolbar>

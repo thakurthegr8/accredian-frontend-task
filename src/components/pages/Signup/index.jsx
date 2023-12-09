@@ -38,16 +38,18 @@ const SignupPage = () => {
         conf_password: ""
     })
     const [errorState, setErrorState] = useState(errorInitialState)
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const schema = Joi.object({
             first_name: Joi.string().required(),
             last_name: Joi.string().required(),
             email: Joi.string().email({ tlds: { allow: false } }).required(),
-            password: Joi.string().required(),
+            password: Joi.string().required().min(5),
             conf_password: Joi.string().valid(Joi.ref("password")).required()
         })
         const validate = schema.validate(formData);
@@ -65,7 +67,7 @@ const SignupPage = () => {
             return;
         }
         setErrorState(errorInitialState);
-        const {conf_password, ...tableFormData} = formData;
+        const { conf_password, ...tableFormData } = formData;
         await register.registerHandler(tableFormData);
     }
 
@@ -84,7 +86,7 @@ const SignupPage = () => {
                                 <TextField onChange={handleChange} type="password" name="conf_password" label="Confirm Password" value={formData.conf_password} error={errorState.conf_password.error} helperText={errorState.conf_password.message} variant="filled" size='small' />
                                 <Button type='submit' variant='contained'>register</Button>
                                 <Link to="/login">
-                                    <Button type='button' variant='outlined' fullWidth>login</Button>
+                                    <Button type='button' variant='outlined' fullWidth disabled={register.registerPayload.loading}>login</Button>
                                 </Link>
                             </Stack>
                         </FormGroup>

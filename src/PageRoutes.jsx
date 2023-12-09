@@ -6,6 +6,7 @@ import SignupPage from './components/pages/Signup'
 import { useAuth } from './providers/Auth'
 import UserProfilePage from './components/pages/Profile'
 import UnAuthLayout from './components/pages/Layouts/UnAuth'
+import AuthLayout from './components/pages/Layouts/Auth'
 
 const PageRoutes = () => {
     const auth = useAuth();
@@ -17,8 +18,9 @@ const PageRoutes = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignupPage />} />
                 </Route>}
-            {auth.user && <><Route index element={<UserProfilePage />} />
-            </>}
+            {auth.user && <Route path="/" element={<AuthLayout />}>
+                <Route index element={<UserProfilePage />} />
+            </Route>}
         </Routes>
     )
 }
